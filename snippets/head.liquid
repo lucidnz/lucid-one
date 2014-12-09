@@ -1,0 +1,73 @@
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+<!-- Titles -->
+<title>
+{{ page_title }}{% if current_tags %} &ndash; tagged "{{ current_tags | join: ', ' }}"{% endif %}{% if current_page != 1 %} &ndash; Page {{ current_page }}{% endif %}{% unless page_title contains shop.name %} &ndash; {{ shop.name }}{% endunless %}
+</title>
+
+<!-- Meta Descriptions -->
+{% assign maxmeta = 155 %}
+{% if page_description != '' %}
+<meta name="description" content="{{ page_description }}" />
+{% elsif template contains 'product' %}
+<meta name="description" content="{{ product.description | strip_html | strip_newlines | truncate: maxmeta | escape }}" />
+{% elsif template contains 'page' %}
+<meta name="description" content="{{ page.content | strip_html | strip_newlines | truncate: maxmeta | escape }}" />
+{% elsif template == 'index' and shop.description != '' %}
+<meta name="description" content="{{ shop.description | strip_html | strip_newlines | truncate: maxmeta | escape}} test" />
+{% endif %}
+<link rel="canonical" href="{{ canonical_url }}" />
+
+<!-- Icons -->
+<link rel="shortcut icon" type="image/x-icon" href="{{ 'favicon.png' | asset_url }}">
+<link rel="apple-touch-icon" sizes="57x57" href="{{ 'icon-ip.png' | asset_url }}">
+<link rel="apple-touch-icon" sizes="72x72" href="{{ 'icon-ipad.png' | asset_url }}">
+<link rel="apple-touch-icon" sizes="114x114" href="{{ 'aicon-ip4.png' | asset_url }}">
+
+<!-- Stylesheets -->
+<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+{{ '_base.scss.css' | asset_url | stylesheet_tag }}
+{{ 'theme-settings.css' | asset_url | stylesheet_tag }}
+<!--[if IE]>{{ 'ie.css' | asset_url | stylesheet_tag }}<![endif]-->
+<!--[if IE 7]>{{ 'ie7.css' | asset_url | stylesheet_tag }}<![endif]-->
+
+<!-- Jquery -->
+{{ 'modernizr.js' | asset_url | script_tag }}
+{{ 'jquery-1.8.3.min.js' | asset_url | script_tag }}
+
+<!-- Web Fonts -->
+	{% if settings.typeface_method == "typekit" and settings.typekit != "" %}
+	<script type="text/javascript" src="http://use.typekit.com/{{ settings.typekit }}.js"></script>
+	<script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+	{% endif %}
+
+	{% if settings.typeface_method == "google_webfonts" %}
+		{% if settings.standard_font contains "Google" %}
+		<link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family={{ settings.standard_font | replace: ' ', '+' | remove: 'Google|' }}:300,400,700">
+		{% endif %}	
+		{% if settings.site_title_font_custom != "" %}
+		<link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family={{ settings.site_title_font_custom }}:300,400,700">
+		{% elsif settings.site_title_font contains "Google" %}
+		<link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family={{ settings.site_title_font | replace: ' ', '+' | remove: 'Google|' }}:300,400,700">
+		{% endif %}
+		{% if settings.heading_font_custom != "" %}
+		<link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family={{ settings.heading_font_custom }}:300,400,700">
+		{% elsif settings.heading_font contains "Google" %}
+		<link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family={{ settings.heading_font | replace: ' ', '+' | remove: 'Google|' }}:300,400,700">
+		{% endif %}
+		{% if settings.navigation_font_custom != "" %}
+		<link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family={{ settings.navigation_font_custom }}:300,400,700">
+		{% elsif settings.navigation_font contains "Google" %}
+		<link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family={{ settings.navigation_font | replace: ' ', '+' | remove: 'Google|' }}:300,400,700">
+		{% endif %}	
+	{% endif %}
+
+<!-- Customer Javascripts -->
+{% if template contains 'customers' %}
+{{ "shopify_common.js" | shopify_asset_url | script_tag }}
+{{ "customer_area.js"  | shopify_asset_url | script_tag }}
+{% endif %}
+
+{{ settings.additional_header }}

@@ -1,0 +1,66 @@
+{% layout settings.customer_layout %}
+<div class="{% if settings.show_sidebar %}span9{% else %}span12{% endif %} columns">
+    
+	<!-- ADMIN HEADER -->
+	<div id="admin_header">
+		<a href="{{ shop.url }}" class="btn btn-primary pull-right" id='return_to_store'>{{ 'customer.account.return_to_store' | t }}</a>
+		<h1 class="title">{{ 'customer.account.title' | t }}</h1>
+		<hr>
+	</div>
+
+	<!-- ACCOUNT DETAILS-->
+	<h3>{{ 'customer.account.details' | t }}</h3>
+	<div id="customer_sidebar">
+		<div id="customer_detail" class="group">
+			<address>
+				<strong>{{ customer.name }}</strong><br>
+				<a href="mailto:{{ customer.email }}">{{ customer.email }}</a>
+			</address>
+			<address>
+				{% if customer.default_address != nil %}
+				{{ customer.default_address.address1 }}<br>
+				{% if customer.default_address.address2 != "" %}
+				{{ customer.default_address.address2 }}<br>
+				{% endif %}
+				{{ customer.default_address.city}}, {% if address.province_code %}{{customer.default_address.province_code}}, {% endif %}{{customer.default_address.country}}<br>
+				{{ customer.default_address.zip}}<br>
+				<abbr title="Phone">P:</abbr> {{ customer.default_address.phone }}
+				{% endif %}
+			</address>
+			<p><a id="view_address" href="/account/addresses">{{ 'customer.account.view_addresses' | t }} ({{ customer.addresses_count }})</a></p>
+		</div>
+	</div>
+    <hr>
+
+	<!-- ACCOUNT ORDERS -->
+	<h3>{{ settings.tr_account_orders }}</h3>
+	<div id="customer_orders">
+		{% if customer.orders.size != 0 %}
+		<table class="table">
+			<thead>
+				<tr>
+					<th class="order_number">{{ 'customer.orders.order_number' | t }}</th>
+					<th class="date">{{ 'customer.orders.date' | t }}</th>
+					<th class="payment_status">{{ 'customer.orders.payment_status' | t }}</th>
+					<th class="fulfillment_status">{{ 'customer.orders.fulfillment_status' | t }}</th>
+					<th class="total">{{ 'customer.orders.total' | t }}</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for order in customer.orders %}
+				<tr class="{% cycle 'odd', 'even' %} {% if order.cancelled %}cancelled_order{% endif %}">
+					<td>{{ order.name | link_to: order.customer_url }}</td>
+					<td><span class="note">{{ order.created_at | date: format: 'mon_day_year' }}</span></td>
+					<td><span class="status_{{ order.financial_status_label }}">{{ order.financial_status_label }}</span></td>
+					<td><span class="status_{{ order.fulfillment_status }}">{{ order.fulfillment_status }}</span></td>
+					<td><span class="total money">{{ order.total_price | money }}</span></td>
+				</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+		{% else %}
+		<p>{{ 'customer.orders.none' | t }}</p>
+		{% endif %}
+	</div>
+	
+</div>

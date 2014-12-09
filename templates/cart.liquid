@@ -1,0 +1,68 @@
+<div class="{% if settings.show_sidebar %}span9{% else %}span12{% endif %} columns">
+<script type="text/javascript">
+function remove_item(id) {
+    document.getElementById('updates_'+id).value = 0;
+	document.getElementById('cartform').submit();
+}
+</script>
+
+<!-- CART TITLE -->
+<h1 class="title">{{ cart.summary.title | t }}</h1>
+<hr>
+	<!-- EMPTY CART MESSAGE -->
+	{% if cart.item_count == 0 %}
+  	{% capture all_products_link %}<a href="/collections/all" title="View all products">{{ 'cart.summary.view_all_products' | t }}</a>{% endcapture %}
+	<p class="alert">{{ 'cart.summary.empty_html' | t: link: all_products_link }}.</p>
+	{% else %}
+	<!-- CART DETAILS -->
+	<form action="/cart" method="post" id="cartform" class="form-horizontal">
+		<table class="table table-striped">
+			<tr>
+				<th class="hidden-phone image">&nbsp;</th>
+				<th>{{ 'cart.summary.item_title' | t }}</th>
+				<th>{{ 'cart.summary.price' | t }}</th>
+				<th>{{ 'cart.summary.quantity' | t }}</th>
+				<th></th>
+				<th class="hidden-phone">{{ 'cart.summary.total' | t }}</th>
+			</tr>
+			{% for item in cart.items %}
+			<tr>
+				<td class="image hidden-phone"><a href="{{ item.url }}"><img src="{{ item | img_url: 'thumb' }}" alt="{{ item.title | escape }}" /></a></td>
+				<td class="description">
+					<p><a href="{{ item.url }}">{{ item.product.title }}</a> <small>{{ item.variant.title }}</small></p>
+					<p class="image hidden-phone">{{ item.product.description | strip_html | truncatewords: 20 }}</p>
+				</td>
+				<td class="price">{{ item.price | money }}{% if item.product.compare_at_price > item.product.price %}<br /><del>{{ item.product.compare_at_price | money }}</del><br><span class="{{ settings.sale_icon }} in-bl">{{ settings.sale_text }}</span>{% endif %}</td>
+				<td class="quantity"><input type="number" name="updates[{{item.variant.id}}]" id="updates_{{ item.variant.id }}" value="{{ item.quantity }}" onfocus="this.select();"/></td>
+				<td class="delete"><a href="#" class="close" onclick="remove_item({{ item.variant.id }}); return false;">&times;</a></td>
+				<td class="total hidden-phone">{{ item.line_price | money }}</td>
+			</tr>
+			{% endfor %}
+		</table>
+		<!-- CART CHECKOUT BUTTONS -->
+		<div class="span6 pull-right checkout-wrap">
+            <h3>{{ 'cart.summary.subtotal' | t }} {{ cart.total_price | money }}</h3>
+            <div class="btn-group">
+		        <button type="submit" class="btn-large btn" name="update">{{ 'cart.summary.update' | t }}</button>
+		        <button class="btn-large btn btn-primary" name="checkout" type="submit">{{ 'cart.summary.checkout' | t }}</button>
+	        </div>
+          	<p><a href="{{ cart.items.first.product.collections.first.url }}" title="{{ 'cart.summary.view_all_products' | t }}">{{ 'cart.summary.continue_shopping_html' | t }}</a></p>
+            {% if settings.display_extra_checkout_buttons %}
+			{% if additional_checkout_buttons %}
+			<div class="additional-checkout-buttons">
+				<span>or</span>&nbsp;{{ content_for_additional_checkout_buttons }}
+			</div>
+			{% endif %}
+			{% endif %}
+        </div>
+		<!-- CART NOTE FIELD -->
+        <div id="note-wrap" class="span6 pull-left no-left-margin top-m">
+          	{% include 'shipping-calculator' %}
+			<p><a href="#collapseOne" data-toggle="collapse" class="accordion-toggle btn btn-small top-m"><i class="icon-pencil"></i> {{ 'cart.summary.add_note' | t }}&hellip;</a></p>
+			<div class="collapse" id="collapseOne" style="height: 0px;">    
+				<textarea name="note" id="note" rows="4">{{ cart.note }}</textarea>  
+			</div>
+        </div>
+	</form>
+	{% endif %}
+</div>

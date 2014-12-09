@@ -1,0 +1,84 @@
+<div class="span3 hidden-phone" id="sidebar">
+
+    <!-- SIDEBAR LOGO -->
+  	{% assign shop_name = shop.name %}
+	{% if settings.logo_position == 'sidebar' %}
+	{% if settings.use_logo_image %}
+	<a class="bl logo l-m" href="/" title="{{ 'general.logo.link_title' | t: shop_name: shop_name }}">
+		<img src="{{ 'sidebar_logo.png' | asset_url }}" alt="{{ shop.name }} Logo">
+	</a>
+	{% else %}
+	<a class="bl logo logo-body l-m" href="/" title="{{ 'general.logo.link_title' | t: shop_name: shop_name }}">{{ shop.name }}</a>
+	{% endif %}
+	<hr>
+	{% endif %}
+
+	<!-- SIDEBAR LINKLISTS -->
+  	{% for i in (1..3) %}
+  	{% assign t_sidebar_linklist = 'sidebar_linklist_' | append: i %}
+  	{% assign sidebar_linklist = settings[t_sidebar_linklist] %}
+  	
+    {% if linklists[sidebar_linklist].links.size > 0 %} 
+    <h3 class="l-m">{{ linklists[sidebar_linklist].title }}</h3>
+    <ul class="nav nav-list">
+      {% for link in linklists[sidebar_linklist].links %}
+      {% assign submenu = link.handle %}
+      {% if linklists[submenu].links.size > 0 %}
+      <li>
+        <a href="{{ link.url }}">{{ link.title }}</a>&nbsp;<span class="fa fa-plus-circle" data-toggle="collapse" data-target="#{{ i | append: '-' | append: link.handle }}"></span>
+        {% for l in linklists[submenu].links %}{% if l.active and l.url != '/' %}{% assign active_sub = true %}{% endif %}{% endfor %}
+        <ul class="subnav collapse{% if active_sub == true %} in{% endif %}" id="{{ i | append: '-' | append: link.handle }}">
+          {% for l in linklists[submenu].links %}
+          <li>{{ l.title | link_to: l.url }}</li>
+          {% endfor %}
+        </ul>
+        {% assign active_sub = false %}
+      </li>
+      {% else %}
+      <li>{{ link.title | link_to: link.url }}</li>
+      {% endif %}
+      {% endfor %}
+    </ul>
+    {% endif %}
+    {% endfor %}
+
+	<!-- SIDEBAR BLOG SUMMARY -->
+	{% if settings.main_blog %}
+	<h3 class="l-m top-em">{{ blogs[settings.main_blog].title }}</h3>
+	<ul class="nav nav-list">
+		{% for article in blogs[settings.main_blog].articles limit:settings.blog_limit %}
+		<li><a href="{{ article.url }}"><span class="softer">{{ article.published_at | date: format: 'day_month_and_year_abbrev' }}&nbsp;&mdash; </span>{{ article.title }}</a></li>
+		{% endfor %}
+	</ul>
+	{% endif %}
+
+	<!-- SIDEBAR NEWSLETTER -->
+	{% if settings.show_newsletter %}
+	<hr>
+	<h3 class="l-m top-em">{{ 'general.newsletter.title' | t }}</h3>
+	{% if settings.mailchimp %}
+	<form action="{{ settings.mailchimp_url }}" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="contact-form l-m" target="_blank">
+		<input type="email" value="" name="EMAIL" class="required email" id="contact_email" placeholder="{{ 'general.newsletter.email' | t }}">
+		<input type="submit" value="{{ 'general.newsletter.button' | t }}" name="subscribe" id="mc-embedded-subscribe" class="submit btn btn-primary">
+	</form>
+	{% else %}    
+	{% form 'customer' %}
+	<div class="l-m">
+		{% if form.posted_successfully? %}
+		<p>{{ 'general.newsletter.success' | t }}</p>
+		{% elsif form.errors %}
+		{% for field in form.errors %}
+		<p><em>{{ field }} - {{ form.errors.messages[field] }}</em></p>
+		{% endfor %}
+		{% endif %}
+		<input type="hidden" id="contact_tags" name="contact[tags]" value="prospect,newsletter"/>
+		<input type="hidden" id="newsletter-first-name" name="contact[first_name]" value="Subscriber" />
+		<input type="hidden" id="newsletter-last-name" name="contact[last_name]" value="Newsletter" />
+		<input type="email" id="contact_email" name="contact[email]" required pattern="[^ @]*@[^ @]*" placeholder="{{ 'general.newsletter.email' | t }}" />
+		<input type='submit' class="submit btn btn-primary" value="{{ 'general.newsletter.button' | t }}" />
+	</div>
+	{% endform %}
+	{% endif %}
+	{% endif %}
+
+</div>

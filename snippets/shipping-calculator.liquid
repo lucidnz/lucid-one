@@ -1,0 +1,73 @@
+{% unless settings.shipping_calculator == 'Disabled' %}
+<a href="#shipping-calculator" data-toggle="collapse" class="accordion-toggle btn top-m">{% if settings.shipping_calculator_heading == blank %}{{ 'cart.shipping_calculator.heading' | t }}{% else %}{{ settings.shipping_calculator_heading }}{% endif %}</a>
+
+<div id="shipping-calculator" class="collapse" style="height: 0px;">
+    
+  <div>
+    <p>
+      <label for="address_country">{{ 'cart.shipping_calculator.country' | t }}</label>
+      <select id="address_country" name="address[country]" data-default="{% if shop.customer_accounts_enabled and customer %}{{ customer.default_address.country }}{% elsif settings.shipping_calculator_default_country == blank %}{{ 'cart.shipping_calculator.default_country' | t }}{% else %}{{ settings.shipping_calculator_default_country }}{% endif %}">{{ country_option_tags }}</select>
+    </p>
+    <p id="address_province_container" style="display:none;">
+      <label for="address_province" id="address_province_label">{{ 'cart.shipping_calculator.province' | t }}</label>
+      <select id="address_province" class="address_form" name="address[province]" data-default="{% if shop.customer_accounts_enabled and customer and customer.default_address.province != '' %}{{ customer.default_address.province }}{% endif %}"></select>
+    </p>
+  </div>
+ 
+  <p>
+    <label for="address_zip">{{ 'cart.shipping_calculator.zip' | t }}</label>
+    <input type="text" id="address_zip" name="address[zip]"{% if shop.customer_accounts_enabled and customer %} value="{{ customer.default_address.zip }}"{% endif %} />
+  </p>
+  <p>
+    <input type="button" class="get-rates btn btn-primary" value="{% if settings.shipping_calculator_submit_button_label == blank %}{{ 'cart.shipping_calculator.submit' | t }}{% else %}{{ settings.shipping_calculator_submit_button_label }}{% endif %}" />
+  </p>
+
+  <div id="wrapper-response"></div>
+  <hr>
+</div>
+
+{% assign shipping_rates_qty = '<%= rates.length %>' %}
+{% assign shipping_rates_price = '<%= rates[0].price %>' %}
+{% assign shipping_address = '<%= address %>' %}
+<script id="shipping-calculator-response-template" type="text/template">
+  <p id="shipping-rates-feedback" <% if (success) { %> class="success" <% } else { %> class="error" <% } %>>
+  <% if (success) { %>
+    <% if (rates.length > 1) { %> 
+    {{ 'cart.shipping_calculator.rates_available_multiple_html' | t: shipping_rates_qty: shipping_rates_qty, shipping_rates_price: shipping_rates_price, shipping_address: shipping_address }}
+    <% } else if (rates.length == 1) { %>
+    {{ 'cart.shipping_calculator.rates_available_singular_html' | t: shipping_address: shipping_address }}
+    <% } else { %>
+    {{ 'cart.shipping_calculator.destination_unavailable_html' | t }}
+    <% } %>
+  <% } else { %>
+    <%= errorFeedback %>
+  <% } %>
+  </p>
+  <ul id="shipping-rates">
+    <% for (var i=0; i<rates.length; i++) { %>
+    <li><%= rates[i].name %> - <%= rates[i].price %></li>
+    <% } %>
+  </ul> 
+</script>
+
+<!--[if lte IE 8]> 
+<style> #shipping-calculator { display: none; } </style> 
+<![endif]--> 
+
+{{ '//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.6.0/underscore-min.js' | script_tag }}
+{{ '/services/javascripts/countries.js' | script_tag }}
+{{ 'shopify_common.js' | shopify_asset_url | script_tag }}
+{{ 'jquery.cart.min.js' | asset_url | script_tag }}
+
+<script>
+
+Shopify.Cart.ShippingCalculator.show( {
+  submitButton: "{% if settings.shipping_calculator_submit_button_label == blank %}{{ 'cart.shipping_calculator.submit' | t }}{% else %}{{ settings.shipping_calculator_submit_button_label }}{% endif %}", 
+  submitButtonDisabled: "{% if settings.shipping_calculator_submit_button_label_disabled == blank %}{{ 'cart.shipping_calculator.submit_disabled' | t }}{% else %}{{ settings.shipping_calculator_submit_button_label_disabled }}{% endif %}"{% if shop.customer_accounts_enabled and customer %},
+  customerIsLoggedIn: true{% endif %},
+  moneyFormat: {{ shop.money_with_currency_format | json }}
+} );
+
+</script>
+
+{% endunless %}

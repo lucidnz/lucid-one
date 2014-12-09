@@ -1,0 +1,86 @@
+<div class="{% if settings.show_sidebar %}span9{% else %}span12{% endif %} columns">
+	<!-- IMAGE SLIDER -->
+    {% if settings.show_slideshow %}
+	<div class="carousel slide{% unless settings.show_breadcrumb %} top-m{% endunless %}" id="myCarousel">
+		<div class="carousel-inner">
+			{% for i in (1..5) %}
+			{% assign show_image = 'show_image_' | append: i %}
+			{% capture slideshow %}{{ 'slideshow_' | append: i | append: '.jpg' }}{% endcapture %}
+			{% assign image_link = 'image_' | append: i | append: '_link' %}
+			{% assign image_desc = 'image_' | append: i | append: '_desc' %}
+			{% if settings[show_image] %}       
+			<div class="item{% if forloop.first %} active{% endif %}">
+				<a href="{{ settings[image_link] }}">
+					<img src="{{ slideshow | asset_url }}" alt="{{ settings[image_desc] }}">
+				</a>
+				{% if settings[image_desc] != '' %}
+				<div class="carousel-caption">
+					<p>{{ settings[image_desc] }}</p>
+				</div>
+				{% endif %}
+			</div>
+			{% endif %}
+			{% endfor %}
+		</div>
+		<a data-slide="prev" href="#myCarousel" class="left carousel-control icon-circle-arrow-left"></a>
+		<a data-slide="next" href="#myCarousel" class="right carousel-control icon-circle-arrow-right"></a>
+	</div>
+    <hr>
+	{% endif %}
+	
+    
+    <!-- HOMEPAGE CONTENT -->
+	<article>
+		<header class="page-header">
+			{% if settings.frontpage_intro != '' %}
+          	<h1 {% unless settings.show_slideshow %}class="title"{% endunless %}>{{ pages[settings.frontpage_intro].title }}</h1>
+			{% else %}
+			<h1 {% unless settings.show_slideshow %}class="title"{% endunless %}>{{ 'home_page.blank_slate.define_page' | t }}</h1>
+			{% endif %}
+		</header>
+		<section>
+			{{ pages[settings.frontpage_intro].content }}
+		</section>
+	</article>
+	<hr>
+    
+    <!-- FEATURED COLLECTIONS -->
+    {% if settings.show_featured_collections %}
+    <h3>{% if settings.featured_collections_heading == blank %}{{ 'home_page.blank_slate.featured_collections_title' | t }}{% else %}{{ settings.featured_collections_heading }}{% endif %}</h3>
+    <hr>
+    {% if settings.featured_collections != '' %}
+        <div class="row-fluid">
+    		<ul class="thumbnails featured-colls">
+    			{% for link in linklists[settings.featured_collections].links limit: 3 %}
+    			<li class="span4 fw	">
+    				<a class="bl center" href="{{ link.url }}" title="Browse our {{ link.title | escape }} collection">
+    					{% if link.object.image %}
+    					<img src="{{ link.object.image.src | collection_img_url: 'original' }}" alt="{{ link.object.image.alt }}" />
+    					{% endif %}
+    				</a>
+    				{% if settings.show_collection_titles %}
+    				<div class="caption">
+    					<h4><a href= "{{ link.url }}" title="View {{ link.title }}">{{ link.title }}</a></h4>
+    				</div>
+    				{% endif %}
+    			</li>
+    			{% endfor %}
+    		</ul>
+    	</div>	
+    {% else %}
+  		{% capture theme_settings_link %}<a href="/admin/themes/{{ theme.id }}/settings">{{ 'home_page.blank_slate.theme_settings' | t }}</a>{% endcapture %}
+    	<p class="alert">{{ 'home_page.blank_slate.define_featured_collection_html' | t: link: theme_settings_link }}</p>
+    {% endif %}
+    <hr>  
+    {% endif %}
+    
+    <!-- FEATURED PRODUCTS -->
+	{% if settings.show_featured_products %}
+		<h3>{% if settings.frontpage_collection_title == blank %}{{ 'home_page.blank_slate.featured_products_title' | t }}{% else %}{{ settings.frontpage_collection_title }}{% endif %}</h3>
+		<hr>
+        {% assign col_group = collections[settings.frontpage_collection] %}
+        {% assign col_settings = settings.home_product_columns %}
+	    {% include 'product-loop' %}
+    {% endif %}
+</div>
+

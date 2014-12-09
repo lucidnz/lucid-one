@@ -1,0 +1,26 @@
+{% layout settings.customer_layout %}
+<div class="{% if settings.show_sidebar %}span9{% else %}span12{% endif %} columns">
+    <div id="template">
+		
+		<div class="template_header">
+			<h1 class="title">{{ 'customer.activate_account.title' | t }}</h1>
+			<p class="note">{{ 'customer.activate_account.subtext' | t }}</p>
+		</div>
+
+		{% form 'activate_customer_password' %}
+		{% if form.errors %}
+		<div class="alert alert-error">
+			{{ form.errors | default_errors }}
+		</div>
+		{% endif %}
+
+		<div class="well form-inline">
+			<input type="password" value="" placeholder="{{ 'customer.activate_account.password' | t }}" name="customer[password]" id="customer_password" class="input-large" />
+			<input type="password" value="" placeholder="{{ 'customer.activate_account.password_confirm' | t }}" name="customer[password_confirmation]" id="customer_password_confirmation" class="input-large" />
+			<button class="btn btn-primary no-bottom-margin" type="submit">{{ 'customer.activate_account.submit' | t }}</button>
+			<button class="btn cancel no-bottom-margin" type="submit" name="decline" id="customer_decline">{{ 'customer.activate_account.cancel' | t }}</button>
+		</div> 
+
+		{% endform %}
+	</div>
+</div>

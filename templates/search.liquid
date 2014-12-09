@@ -1,0 +1,43 @@
+<div class="{% if settings.show_sidebar %}span9{% else %}span12{% endif %} columns">
+    
+	<!-- SEARCH FORM -->
+	<form class="well form-search" action="/search" method="get">
+		<input type="text" class="input-large search-query" name="q" value="{{ search.terms | escape }}" id="result-q">
+		<button type="submit" class="btn btn-primary">{{ 'general.search.search_button' | t }}</button>
+	</form>
+	
+	<!-- SEARCH RESULTS -->
+	<h1 class="title">{{ 'general.search.title' | t }}</h1>
+	<hr>
+	{% if search.performed %}
+		{% paginate search.results by 10 %}  
+			{% if search.results == empty %}
+  				{% assign search_terms = search.terms | escape %}
+				<p>{{ 'general.search.results_for_html' | t: search_terms: search_terms }}</p>
+				<p><em>{{ 'general.search.no_results' | t }}</em></p>
+			{% else %}  
+				{% for item in search.results %}      
+				<div class="row-fluid">
+					<div class="span9">
+						{% if item.featured_image %}
+							<div class="row-fluid">
+								<div class="span2"><a href="{{item.url}}" title="">{{ item.featured_image | product_img_url: 'compact' | img_tag }}</a></div>
+								<div class="span10"><h3>{{ item.title | link_to: item.url }}</h3>{{ item.content | strip_html | truncatewords: 40 | highlight: search.terms }}</div>
+							</div>
+						{% else %}
+							<h3>{{ item.title | link_to: item.url }}</h3>
+							{{ item.content | strip_html | truncatewords: 40 | highlight: search.terms }}
+						{% endif %}
+						<hr>
+					</div>
+				</div>
+				{% endfor %}
+			{% endif %}
+			<!-- PAGINATION -->
+			{% include 'pagination' %}
+		{% endpaginate %}    
+	{% else %}
+		<!-- NO RESULTS ALERT -->
+		<p class="alert">{{ 'general.search.empty_search' | t }}</p>  
+	{% endif %}
+</div>

@@ -1,0 +1,6 @@
+{% assign comment_created_at_date = comment.created_at | date: format: 'day_month_and_year' %}
+{% assign comment_author = comment.author %}
+<div id="comment-{{ comment.id }}" class="comment clearfix">
+          <p><small>{{ 'blog.comment.created_at_html' | t: comment_created_at_date: comment_created_at_date, comment_author: comment_author }}</small></p>
+          <div>{{ comment.content }}</div>
+</div> <!-- /.comment -->

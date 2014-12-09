@@ -1,0 +1,44 @@
+        <div id="collection">
+            {% if col_group.products.size > 0 %}
+    			{% for product in col_group.products %}
+    			{% if col_settings == '3' %}
+    				{% cycle 'product-loop-clear-start-2': '<div class="row-fluid"><ul class="thumbnails">', '', '' %}
+    			{% elsif col_settings == '4' %}
+    				{% cycle 'product-loop-clear-start-2': '<div class="row-fluid"><ul class="thumbnails">', '', '', '' %}
+    			{% endif %}
+    
+    				<li class="span{% if col_settings == '4' %}3{% elsif col_settings == '3' %}4{% endif %}">
+    					<div class="thumbnail">
+    						<a class="bl center rel" href= "{{ product.url | within: col_group }}" title="{{ product.title }}">
+    							<img src="{{ product.featured_image | product_img_url: 'large' }}" alt="{{ product.featured_image.alt }}">
+                                {% if product.available %}
+        							{% if product.compare_at_price_max > product.price %}
+                                    <span class="{{ settings.sale_icon }} abs">{{ 'product.product_loop.on_sale' | t }}</span>
+                                    {% endif %}
+                                {% else %}
+                                    <span class="label abs">{{ 'product.product_loop.out_of_stock' | t }}</span>
+                                {% endif %}
+    						</a>
+    						<div class="caption">
+    							<h4><a href= "{{ product.url | within: col_group }}" title="{{ product.title }}">{{ product.title }}</a></h4>
+    							<p>
+                                    {% if product.price_varies %}{{ 'product.product_loop.price_varies' | t }}{% endif %}{{ product.price_min | money_with_currency }}
+    							</p>
+    						</div>
+    					</div>
+    				</li>
+    				{% if forloop.last %}
+    			</ul>
+    			</div>
+    			{% else %}
+    				{% if col_settings == '3' %}
+    					{% cycle 'product-loop-clear-end-2': '', '', '</ul></div>' %}
+    				{% elsif col_settings == '4' %}
+    					{% cycle 'product-loop-clear-end-2': '', '', '', '</ul></div>' %}
+    				{% endif %}
+    			{% endif %}
+    			{% endfor %}
+            {% else %}
+                <p class="alert">{{ product.product_loop.empty_collection_alert }}</p>
+            {% endif %}
+        </div>

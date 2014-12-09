@@ -1,0 +1,10 @@
+<p class="credit-cards">
+	{% if settings.american_express %}<span class="cc amex"></span>{% endif %}
+	{% if settings.visa %}<span class="cc visa"></span>{% endif %}
+	{% if settings.mastercard %}<span class="cc mastercard"></span>{% endif %}
+	{% if settings.discover %}<span class="cc discover"></span>{% endif %}
+	{% if settings.paypal %}<span class="cc paypal"></span>{% endif %}  
+	{% if settings.western_union %}<span class="cc wu"></span>{% endif %}
+	{% if settings.cirrus %}<span class="cc cirrus"></span>{% endif %}
+	{% if settings.delta %}<span class="cc delta"></span>{% endif %}
+</p>

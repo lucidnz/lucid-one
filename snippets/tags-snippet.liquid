@@ -1,0 +1,56 @@
+{% if settings.display_tags == 'inline' %}
+	<ul class="nav nav-pills hidden-phone hidden-tablet">
+		{% if collection.all_tags.size > 0 %}
+			<li{% unless current_tags %} class="active"{% endunless %}>
+			{% if collection.handle %}
+			{% comment %}Good for /collections/all collection and regular collections{% endcomment %}
+				<a href="/collections/{{ collection.handle }}">{{ 'collection.tags.all' | t }}</a>
+			{% comment %}Good for automatic type collections{% endcomment %}
+			{% elsif collection.products.first.type == collection.title %}
+				<a href="{{ collection.title | url_for_type }}">{{ 'collection.tags.all' | t }}</a>
+			{% comment %}Good for automatic vendor collections{% endcomment %}
+			{% elsif collection.products.first.vendor == collection.title %}
+				<a href="{{ collection.title | url_for_vendor }}">{{ 'collection.tags.all' | t }}</a>
+			{% endif %}
+			</li> 
+		{% endif %}
+		{% for tag in collection.all_tags %}
+			{% if current_tags contains tag %}
+			<li class="active">
+				{{ tag | link_to_remove_tag: tag }}
+			</li>
+			{% else %}
+			<li>
+				{{ tag | link_to_tag: tag }}
+			</li>
+			{% endif %}
+		{% endfor %}  
+	</ul>
+	<div class="clearfix filter hidden-desktop">
+		<h4 class="pull-left">{{ 'collection.tags.browse_by' | t }}</h4>
+		<select class="coll-filter top-m">
+			<option value="">{{ 'collection.tags.all' | t }}</option>
+			{% for tag in collection.all_tags %}
+			{% if current_tags contains tag %}
+			<option value="{{ tag | handle }}" selected>{{ tag }}</option>
+			{% else %}
+			<option value="{{ tag | handle }}">{{ tag }}</option>
+			{% endif %}
+			{% endfor %}
+		</select>
+	</div>
+{% elsif settings.display_tags == 'dropdown' %}
+	<div class="clearfix filter">
+		<p>{{ 'collection.tags.browse_by' | t }}</p>
+		<select class="coll-filter">
+			<option value="">{{ 'collection.tags.all' | t }}</option>
+			{% for tag in collection.all_tags %}
+			{% if current_tags contains tag %}
+			<option value="{{ tag | handle }}" selected>{{ tag }}</option>
+			{% else %}
+			<option value="{{ tag | handle }}">{{ tag }}</option>
+			{% endif %}
+			{% endfor %}
+		</select>
+	</div>
+{% endif %}

@@ -1,0 +1,60 @@
+<!-- Solution brought to you by Caroline Schnapp -->
+<!-- See this: http://wiki.shopify.com/Related_Products -->
+
+<!-- ASSIGN IMAGE SIZE AND NUMBER OF RELATED PRODUCTS -->
+{% assign number_of_related_products_to_show = 4 %}
+{% assign image_size = 'medium' %}
+
+{% capture number_of_related_products_to_fetch %}{{ number_of_related_products_to_show | plus: 1 }}{% endcapture %}
+
+{% if collection == null or collection.handle == 'frontpage' or collection.handle == 'all' %}
+    {% assign found_a_collection = false %}
+	{% for c in product.collections %}
+		{% if found_a_collection == false and c.handle != 'frontpage' and c.handle != 'all' and c.all_products_count > 1 %}
+		{% assign found_a_collection = true %}
+		{% assign collection = c %}
+		{% endif %}
+	{% endfor %}
+{% endif %}
+
+{% if collection and collection.products_count > 1 %}
+<hr>
+<!-- RELATED PRODUCTS TITLE -->
+<h2>{{ 'product.related_products.title' | t }}</h2>
+<hr>
+
+<!-- RELATED PRODUCTS IMAGES -->
+<div class="row-fluid">
+	<ul class="thumbnails">
+		{% assign current_product_found = false %}
+		{% for prod in collection.products limit: number_of_related_products_to_fetch %}
+		{% if prod.title == product.title %}
+		{% assign current_product_found = true %}
+		{% else %}
+		{% unless current_product_found == false and forloop.last %}
+		<li class="span3">
+			<div class="thumbnail">
+				<a class="bl center rel" href="{{ prod.url | within: collection }}" title="{{ prod.title | escape }}">
+					{{ prod.featured_image | product_img_url: image_size | img_tag }}
+    				{% if prod.available %}
+						{% if prod.compare_at_price_max > prod.price %}
+                        <span class="{{ settings.sale_icon }} abs">{{ 'product.product_loop.on_sale' | t }}</span>
+                        {% endif %}
+					{% else %}
+					    <span class="label abs">{{ 'product.product_loop.out_of_stock' | t }}</span>
+					{% endif %}
+				</a>
+				<div class="caption">
+					<h4><a href="{{ prod.url }}" title="View {{ prod.title | escape }}">{{ prod.title }}</a></h4>
+					<p>
+                        {% if prod.price_varies %}{{ 'product.product_loop.price_varies' | t }}{% endif %}{{ prod.price_min | money_with_currency }}
+					</p>
+				</div>
+			</div>
+		</li>
+		{% endunless %}
+		{% endif %}
+		{% endfor %}
+	</ul>
+</div>
+{% endif %}

@@ -1,0 +1,182 @@
+{% if settings.typeface_method == "google_webfonts" %}
+{% if settings.heading_font contains "Google" %}
+@import url('//fonts.googleapis.com/css?family={{ settings.heading_font | replace: ' ', '+' | remove: 'Google|' }}:300,400,700');
+{% endif %}
+{% endif %}
+
+/* Checkout CSS */
+body {
+    {% if settings.custom_background_image %}
+    {% if settings.background_image_style == "repeat" %}
+    background: url('{{ 'background_image.png' | asset_url }}') repeat scroll {{ settings.main_background_color }}; 
+	{% endif %}
+	{% if settings.background_image_style == "no-repeat" %}
+	background: url('{{ 'background_image.png' | asset_url }}') no-repeat scroll {{ settings.background_image_hpos }} {{ settings.background_image_vpos }} {{ settings.main_background_color }}; 
+	{% endif %}
+  	{% else %}
+  	background-color: {{ settings.main_background_color }};
+  	{% endif %}
+	color: {{ settings.text_color }};
+    padding-top: 0;
+}
+{% if settings.use_logo_image %}
+{% if logo_position == 'header' %}
+#logo {
+     background: url('{{ 'header_logo.png' | asset_url }}') no-repeat 10px center;
+     min-height: 60px;
+}
+h1#tagline {
+     display: none; 
+}
+{% endif %}
+{% endif %}
+
+#header, #container.slim #header, #main, #container.slim #main, #footer, #container.slim #footer, #container {
+    padding:0;
+    margin:0;
+    background:none;
+}
+#header, #container.slim #header {
+    background-color: {{ settings.nav_bar_color }};
+    width: 100%;
+    min-height: 60px;
+    margin-bottom: 30px;
+}
+#main, #footer, h1#tagline, #logo {
+    width:884px;
+    margin: 0 auto;
+}
+#container, #container.slim {
+    width: 100%;
+}
+#container.slim h1#tagline, #container.slim #main, #container.slim #footer {
+    width: 460px;
+    margin: 0 auto;
+}
+#container.slim .group {
+    padding-left: 0px;
+    padding-right: 0px;
+}
+textarea:focus, 
+input[type="text"]:focus, 
+input[type="password"]:focus, 
+input[type="datetime"]:focus, 
+input[type="datetime-local"]:focus, 
+input[type="date"]:focus, 
+input[type="month"]:focus, 
+input[type="time"]:focus, 
+input[type="week"]:focus, 
+input[type="number"]:focus, 
+input[type="email"]:focus, 
+input[type="url"]:focus, 
+input[type="search"]:focus, 
+input[type="tel"]:focus, 
+input[type="color"]:focus, 
+.uneditable-input:focus {
+    border-color: {{ settings.link_color }};
+	box-shadow: none;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+#cost, 
+#order-num,
+#steps,
+#overview h2,
+#thumbs h3, 
+.group h3, 
+.pgroup h3
+{
+	{% if settings.heading_font_custom != "" %}
+	font-family: '{{ settings.heading_font_custom }}';
+	{% elsif settings.heading_font contains "Google" %}
+  	font-family: '{{ settings.heading_font | remove: 'Google|' }}';
+    {% else %}
+	font-family: {{ settings.heading_font }};
+	{% endif %}
+	font-weight: {{ settings.heading_font_weight }};
+	text-transform: {{ settings.site_title_font_case }};
+    color: {{ settings.text_color }};
+}
+h1 {
+	font-size: {{ settings.heading_h1_font_size }};
+	line-height: {{ settings.heading_h1_line_height }};
+}
+h1#tagline, h1 span.subtitle {
+    color: {{ settings.logo_header_color }};
+}
+h1#tagline {
+    font-size: {{ settings.site_title_font_size }};
+    line-height: 60px;
+}
+h2, #overview h2 {
+	font-size: {{ settings.heading_h2_font_size }};
+	line-height: {{ settings.heading_h2_line_height }};
+}
+h3, #thumbs h3, .group h3, .pgroup h3 {
+	font-size: {{ settings.heading_h3_font_size }};
+	line-height: {{ settings.heading_h3_line_height }};
+    font-weight: normal;
+  	text-shadow: none;
+}
+h4 {
+	font-size: {{ settings.heading_h4_font_size }};
+	line-height: {{ settings.heading_h4_line_height }};
+	margin-bottom: 1em;
+}
+#cost, #order-num { 
+  	font-size: 300%; text-shadow: none;
+}
+#steps { 
+  	font-size: 140%; 
+}
+#cost {
+  	margin-bottom: 0; 
+}
+a {
+	color: {{ settings.link_color }};
+	text-decoration: none;
+}
+a:hover {
+	color:{{ settings.link_hover_color }};
+	text-decoration: underline;
+}
+.form td input, #email input, input[type="text"], input[type="password"] {
+    line-height: 20px;
+}
+#products, #overview, #thumbs div {
+    border-color: {{ settings.line-color }};
+}
+#thumbs span, label, #email input {
+    font-family: {{ settings.standard_font }};
+    line-height: 140%;
+}
+#thumbs span, label {
+    color: {{ settings.text_color }};
+}
+#thumbs h3 span, #cost, #order-num, #overview .hint {
+    color: {{ settings.text_color }};
+}
+#thumbs div {
+    background-color: #fff;
+}
+#email input {
+    font-size: 13px;
+}
+#email, #addresses, .group, #buttons, .group h3 {
+   background: none;
+   border: none;
+}
+#email, #payment, #payment-method {
+   border-bottom: 1px solid {{ settings.line-color }};
+}
+#email {
+   padding-bottom: 30px;
+}
+#overview {
+   background: none; 
+}

@@ -1,0 +1,49 @@
+<div class="{% if settings.show_sidebar %}span9{% else %}span12{% endif %} columns">
+    {% paginate collection.products by settings.pagination_limit %}
+	<h1 class="title">{{ collection.title }}</h1>
+	<hr>
+	{{ collection.description }}
+	{% unless collection.description == '' %}
+	<hr>
+	{% endunless %}
+	{% if collection.products.size == 0 %}
+		{{ 'collection.no_products' | t }}
+	{% else %}
+        <!-- TAGS -->
+        {% include 'tags-snippet' %}
+        <!-- PRODUCT COLLECTION -->
+		{% assign col_group = collection %}
+		{% assign col_settings = settings.product_collection_columns %}
+		{% include 'product-loop' %}
+	{% endif %}
+		{% include 'pagination' %}
+	{% endpaginate %}
+</div>
+
+<script>
+// COLLECTION DROPDOWN TAGS //
+/* Product Tag Filters - Good for any number of filters on any type of collection pages */
+/* Brought to you by Caroline Schnapp */
+var collFilters = jQuery('.coll-filter');
+collFilters.change(function() {
+	var newTags = [];
+	collFilters.each(function() { 
+		if (jQuery(this).val()) {
+			newTags.push(jQuery(this).val());
+		}
+	});
+	if (newTags.length) {
+		var query = newTags.join('+');
+		window.location.href = jQuery('{{ 'tag' | link_to_tag: 'tag' }}').attr('href').replace('tag', query);
+	} 
+	else {
+		{% if collection.handle %}
+		window.location.href = '/collections/{{ collection.handle }}';
+		{% elsif collection.products.first.type == collection.title %}
+		window.location.href = '{{ collection.title | url_for_type }}';
+		{% elsif collection.products.first.vendor == collection.title %}
+		window.location.href = '{{ collection.title | url_for_vendor }}';
+		{% endif %}
+	}
+});
+</script>
