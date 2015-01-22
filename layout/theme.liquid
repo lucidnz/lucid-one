@@ -33,12 +33,15 @@
 							<ul class="nav">
 								{% for link in linklists.main-menu.links %}
 
+                {% assign link_title_key = 'navigation.main_navigation_linklist.link_title_' | append: forloop.index %}
+                {% capture link_title %}{{ link_title_key | t | default: link.title }}{% endcapture %}
+
 								{% capture child_list_handle %}{{ link.title | handle }}{% endcapture %}
 								{% if linklists[child_list_handle] and linklists[child_list_handle].links.size > 0 %}
 
 								<li class="dropdown{% if link.active %} active{% endif %}" id="menu{{ forloop.index }}" >
-									<a class="dropdown-toggle" data-toggle="dropdown" href="#menu{{ forloop.index }}" title="View {{ link.title }}">
-										{{ link.title }}
+									<a class="dropdown-toggle" data-toggle="dropdown" href="#menu{{ forloop.index }}" title="View {{ link_title }}">
+										{{ link_title }}
 										<b class="caret"></b>
 									</a>
 									<!-- DROPDOWN MENU -->
@@ -52,7 +55,7 @@
 								</li>
 								{% else %}
 								<li {% if link.active %}class="active"{% endif %}>
-									<a href="{{ link.url }}" title="View {{ link.title }}">{{ link.title }}</a>        
+									<a href="{{ link.url }}" title="View {{ link_title }}">{{ link_title }}</a>        
 								</li>    
 								{% endif %}
 								{% endfor %}
