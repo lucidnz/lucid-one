@@ -119,7 +119,7 @@
 var selectCallback = function(variant, selector) {
 	if (variant && variant.available == true) {
 		if (variant.compare_at_price > variant.price) {
-			jQuery('#price-field h3').html(Shopify.formatMoney(variant.price, "{{shop.money_with_currency_format}}") + "&nbsp;<span class='{{ settings.sale_icon }}'>{{ settings.sale_text }}</span>&nbsp;<s><small>" + Shopify.formatMoney(variant.compare_at_price, "{{shop.money_with_currency_format}}") + "</small></s>");  // update price field        
+			jQuery('#price-field h3').html(Shopify.formatMoney(variant.price, "{{shop.money_with_currency_format}}") + "&nbsp;<span class='{{ settings.sale_icon }}'>{{ 'product.product_loop.on_sale' | t }}</span>&nbsp;<s><small>" + Shopify.formatMoney(variant.compare_at_price, "{{shop.money_with_currency_format}}") + "</small></s>");  // update price field        
 		} else {
 			jQuery('#price-field h3').html(Shopify.formatMoney(variant.price, "{{shop.money_with_currency_format}}"));  // update price field        
 		}
@@ -128,10 +128,10 @@ var selectCallback = function(variant, selector) {
 		{% endif %}
 		// selected a valid variant
 		jQuery('#addtocart').removeClass('disabled').removeAttr('disabled'); // remove unavailable class from add-to-cart button, and re-enable button
-		jQuery('#addtocart').text('Add to Cart');
+		jQuery('#addtocart').text({{ 'product.form.add_to_cart' | t }});
 	} else {
 		// variant doesn't exist
-		jQuery('#addtocart').addClass('disabled').attr('disabled', 'disabled').text('Sold Out');      // set add-to-cart button to unavailable class and disable button
+		jQuery('#addtocart').addClass('disabled').attr('disabled', 'disabled').text({{ 'product.form.sold_out' | t }});      // set add-to-cart button to unavailable class and disable button
 	}
     {% if product.images.size > 0 %}
 	var new_image_id = {{ featured_image.id }}; 

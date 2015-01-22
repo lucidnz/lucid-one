@@ -187,6 +187,7 @@
       "sale_text": "On Sale",
       "quantity": "Qty: ",
       "add_to_cart": "Add to Cart",
+      "sold_out": "Sold Out",
       "sold_out_alert_html": "Sorry, <strong>the {{ product_title }}</strong> is sold out."
     },
     "details": {
