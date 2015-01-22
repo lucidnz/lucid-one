@@ -26,7 +26,7 @@
       {% if linklists[submenu].links.size > 0 %}
       <li>
         <a href="{{ link.url }}">{{ link.title }}</a>&nbsp;<span class="fa fa-plus-circle" data-toggle="collapse" data-target="#{{ i | append: '-' | append: link.handle }}"></span>
-        {% for l in linklists[submenu].links %}{% if l.active and l.url != '/' %}{% assign active_sub = true %}{% endif %}{% endfor %}
+        {% for l in linklists[submenu].links %}{% if l.active %}{% assign active_sub = true %}{% endif %}{% endfor %}
         <ul class="subnav collapse{% if active_sub == true %} in{% endif %}" id="{{ i | append: '-' | append: link.handle }}">
           {% for l in linklists[submenu].links %}
           <li>{{ l.title | link_to: l.url }}</li>

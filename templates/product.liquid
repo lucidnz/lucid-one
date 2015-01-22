@@ -75,7 +75,7 @@
 				{% endif %}
 				{% if collection.next_product %}
 				<li class="next">
-					{{ 'product.pager.next_html' | t | link_to: collection.next_product }}
+					{{ 'product.pager.prev_html' | t | link_to: collection.next_product }}
 				</li>
 				{% endif %}
 			</ul>
@@ -148,7 +148,13 @@ var selectCallback = function(variant, selector) {
     {% endif %}
 };
       
-    
+{% if product.variants.size == 1 %}     
+  var new_image_id = {{ featured_image.id }}; 
+  console.log('new image id', new_image_id);
+  $(".featured-image").click(function(){
+  	$("#"+new_image_id).trigger("click"); 
+  });  
+{% endif %} 
 
 // initialize multi selector for product
 jQuery(function() {

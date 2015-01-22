@@ -62,7 +62,7 @@
 							{%  if settings.show_navbar_search %}
 							<form class="navbar-search pull-right" action="/search" method="get">
 								{% assign col = settings.typeahead_collection %}
-								<input id="search-input" name="q" type="text" class="search-query" placeholder="{{ 'general.search.search_button' | t }}" data-provide="typeahead" data-source="[{% for product in collections.all.products %}&quot;{{ product.title }} - {{ product.price | money | strip_html }}&quot;{% unless forloop.last %},{% endunless %}{% endfor %}]" autocomplete="off">  
+								<input id="search-input" name="q" type="text" class="search-query" placeholder="{{ 'general.search.search_button' | t }}" data-provide="typeahead" data-source="[{% for product in collections[settings.typeahead_collection].products %}{{ product.title | append: "&quot;" | prepend: "&quot;" }}{% unless forloop.last %},{% endunless %}{% endfor %}]" autocomplete="off">  
                           	</form>
 							{% endif %}
 
@@ -183,7 +183,7 @@
 						{% if settings.twitter-icon != '' %}<a href="http://twitter.com/{{ settings.twitter-icon }}" title="{{ 'general.social.view_twitter' | t: shop_name: shop_name }}" target="_blank" class="fa fa-twitter-square twitter"></a>{% endif %}
 						{% if settings.googleplus-icon != '' %}<a href="{{ settings.googleplus-icon }}" title="{{ 'general.social.view_googleplus' | t: shop_name: shop_name }}" target="_blank" class="fa fa-google-plus-square googleplus"></a>{% endif %}
 						{% if settings.pinterest-icon != '' %}<a href="{{ settings.pinterest-icon }}" title="{{ 'general.social.view_pinterest' | t: shop_name: shop_name }}" target="_blank" class="pinterest fa fa-pinterest-square"></a>{% endif %}
-                      {% if settings.instagram-icon != '' %}<a href="{{ settings.instagram-icon }}" title="{{ 'general.social.view_instagram' | t: shop_name: shop_name }}" target="_blank" class="instagram"><i class="fa fa-instagram"></i></a>{% endif %}
+                      	{% if settings.instagram-icon != '' %}<a href="{{ settings.instagram-icon }}" title="{{ 'general.social.view_instagram' | t: shop_name: shop_name }}" target="_blank" class="instagram fa fa-instagram"></a>{% endif %}
 						{% if settings.rss-icon != '' %}<a href="{{ settings.rss-icon }}.atom" title="{{ 'general.social.view_rss' | t: shop_name: shop_name }}" target="_blank" class="fa fa-rss-square rss"></a>{% endif %}
 					</p>
 				</div>
