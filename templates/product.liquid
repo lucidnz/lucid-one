@@ -133,19 +133,18 @@ var selectCallback = function(variant, selector) {
 		// variant doesn't exist
 		jQuery('#addtocart').addClass('disabled').attr('disabled', 'disabled').text({{ 'product.form.sold_out' | t }});      // set add-to-cart button to unavailable class and disable button
 	}
-    {% if product.images.size > 0 %}
-	var new_image_id = {{ featured_image.id }}; 
+  {% if product.images.size > 0 %}
 	if (variant && variant.featured_image) {
 		var original_image = $(".featured-image img"), new_image = variant.featured_image, new_image_id = variant.featured_image.id;
 		Shopify.Image.switchImage(new_image, original_image[0], function (new_image_src, original_image, element) {
 			$(element).parents('a').attr('data-image-id', new_image_id);
-			$(element).attr('src', new_image_src.replace('_large','_1024x1024'));
+			$(element).attr('src', new_image_src.replace('_large.','_1024x1024.'));
 		});
 	}
 	$(".featured-image").click(function(){
 		$("#"+new_image_id).trigger("click"); 
 	});  
-    {% endif %}
+  {% endif %}
 };
       
 {% if product.variants.size == 1 %}     
