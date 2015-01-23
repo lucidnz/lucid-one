@@ -117,20 +117,6 @@
       "print": "Print"
     }
   },
-  "navigation": {
-    "main_navigation_linklist": {
-      "link_title_1": "",
-      "link_title_2": "",
-      "link_title_3": "",
-      "link_title_4": "",
-      "link_title_5": "",
-      "link_title_6": "",
-      "link_title_7": "",
-      "link_title_8": "",
-      "link_title_9": "",
-      "link_title_10": ""
-    }
-  },
   "home_page": {
     "blank_slate": {
       "define_page": "Define page for welcome message.",
