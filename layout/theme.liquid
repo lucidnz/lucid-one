@@ -31,7 +31,7 @@
 							{% endif %}
 							<!-- MAIN NAVIGATION -->
 							<ul class="nav">
-								{% for link in linklists.main-menu.links %}
+								{% for link in linklists[settings.nav_dropdown_linklist].links %}
 
 								{% capture child_list_handle %}{{ link.title | handle }}{% endcapture %}
 								{% if linklists[child_list_handle] and linklists[child_list_handle].links.size > 0 %}
