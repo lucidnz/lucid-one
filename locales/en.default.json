@@ -3,6 +3,7 @@
     "account": {
       "title": "My Account",
       "details": "Account Details",
+      "orders": "Account Orders",
       "view_addresses": "View Addresses",
       "return": "Return to Account Details",
       "login": "Login",
