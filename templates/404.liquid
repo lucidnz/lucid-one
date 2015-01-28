@@ -1,6 +1,6 @@
 <div class="{% if settings.show_sidebar %}span9{% else %}span12{% endif %} ">
-	<h1 class="title">>{{ 'general.404.title' | t }}</h1>
-	<p>>{{ 'general.404.subtext' | t }}</p>
+	<h1 class="title">{{ 'general.404.title' | t }}</h1>
+	<p>{{ 'general.404.subtext' | t }}</p>
 	<br>
 	<form class="well form-search" action="/search" method="get">
 		<input type="text" class="input-large search-query" name="q" value="{{search.terms  | escape}}" id="result-q">
