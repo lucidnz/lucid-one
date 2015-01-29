@@ -128,10 +128,10 @@ var selectCallback = function(variant, selector) {
 		{% endif %}
 		// selected a valid variant
 		jQuery('#addtocart').removeClass('disabled').removeAttr('disabled'); // remove unavailable class from add-to-cart button, and re-enable button
-		jQuery('#addtocart').text({{ 'product.form.add_to_cart' | t }});
+		jQuery('#addtocart').text("{{ 'product.form.add_to_cart' | t }}");
 	} else {
 		// variant doesn't exist
-		jQuery('#addtocart').addClass('disabled').attr('disabled', 'disabled').text({{ 'product.form.sold_out' | t }});      // set add-to-cart button to unavailable class and disable button
+		jQuery('#addtocart').addClass('disabled').attr('disabled', 'disabled').text("{{ 'product.form.sold_out' | t }}"); // set add-to-cart button to unavailable class and disable button
 	}
   {% if product.images.size > 0 %}
 	if (variant && variant.featured_image) {
