@@ -180,7 +180,7 @@
 					<p class="social-icons">
                       	{% assign shop_name = shop.name %}
 						{% if settings.facebook-icon != '' %}<a href="{{ settings.facebook-icon }}" title="{{ 'general.social.view_facebook' | t: shop_name: shop_name }}" target="_blank" class="fa fa-facebook-square facebook"></a>{% endif %}
-						{% if settings.twitter-icon != '' %}<a href="http://twitter.com/{{ settings.twitter-icon }}" title="{{ 'general.social.view_twitter' | t: shop_name: shop_name }}" target="_blank" class="fa fa-twitter-square twitter"></a>{% endif %}
+						{% if settings.twitter-icon != '' %}<a href="//twitter.com/{{ settings.twitter-icon }}" title="{{ 'general.social.view_twitter' | t: shop_name: shop_name }}" target="_blank" class="fa fa-twitter-square twitter"></a>{% endif %}
 						{% if settings.googleplus-icon != '' %}<a href="{{ settings.googleplus-icon }}" title="{{ 'general.social.view_googleplus' | t: shop_name: shop_name }}" target="_blank" class="fa fa-google-plus-square googleplus"></a>{% endif %}
 						{% if settings.pinterest-icon != '' %}<a href="{{ settings.pinterest-icon }}" title="{{ 'general.social.view_pinterest' | t: shop_name: shop_name }}" target="_blank" class="pinterest fa fa-pinterest-square"></a>{% endif %}
                       	{% if settings.instagram-icon != '' %}<a href="{{ settings.instagram-icon }}" title="{{ 'general.social.view_instagram' | t: shop_name: shop_name }}" target="_blank" class="instagram fa fa-instagram"></a>{% endif %}
