@@ -8,6 +8,7 @@
       "return": "Return to Account Details",
       "login": "Login",
       "logout": "Logout",
+      "register_account": "Create an account",
       "account_title": "Account",
       "return_to_store": "Return to Store"
     },
