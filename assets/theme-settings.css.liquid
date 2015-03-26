@@ -274,8 +274,8 @@ a.logo-header, a.logo-header-image {
 .navbar .nav li.dropdown.open > .dropdown-toggle .caret, 
 .navbar .nav li.dropdown.active > .dropdown-toggle .caret, 
 .navbar .nav li.dropdown.open.active > .dropdown-toggle .caret {
-	border-top-color: {{ settings.nav_link_hover_color | default: settings.nav_link_color }};
-	border-bottom-color: {{ settings.nav_link_hover_color | default: settings.nav_link_color  }};
+	border-top-color: {{ settings.nav_link_hover_color }};
+	border-bottom-color: {{ settings.nav_link_hover_color }};
 }
 .navbar, .navbar .nav > li > a:hover, 
 .navbar, .navbar .nav > li > a:focus, .dropdown-menu a:hover, 
@@ -507,7 +507,7 @@ a.thumbnail:hover {
 
 .footer {
 	margin-top: 35px;
-	background-color: {{ settings.footer_color | default: 'transparent' }};
+	background-color: {{ settings.footer_color }};
 }
 .footer .container {
 	padding: 30px 0 0 0;
