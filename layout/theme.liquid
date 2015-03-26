@@ -173,9 +173,7 @@
 				</div>
 				<!-- SOCIAL LINKS  -->
 				<div class="span3 column clearfix">
-                    {% if settings.show_newsletter_footer %}
-                    <h3>{% if settings.sm_title == blank %}{{ 'home_page.blank_slate.social_media_title' | t }}{% else %}{{ settings.sm_title }}{% endif %}</h3>
-                    {% endif %}
+          <h3>{% if settings.sm_title == blank %}{{ 'home_page.blank_slate.social_media_title' | t }}{% else %}{{ settings.sm_title }}{% endif %}</h3>
 					<p class="social-icons">
                       	{% assign shop_name = shop.name %}
 						{% if settings.facebook-icon != '' %}<a href="{{ settings.facebook-icon }}" title="{{ 'general.social.view_facebook' | t: shop_name: shop_name }}" target="_blank" class="fa fa-facebook-square facebook"></a>{% endif %}
