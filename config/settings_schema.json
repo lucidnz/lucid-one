@@ -1,14 +1,15 @@
 [
   {
-    "name": "Welcome",
+    "name": "theme_info",
+    "logo": "https:\/\/cdn.shopify.com\/s\/files\/1\/0000\/1712\/files\/Lucid-logo-03-512px.png",
     "settings": [
       {
         "type": "header",
-        "content": "Lucid One V2.9.8"
+        "content": "Lucid One V2.9.9"
       },
       {
         "type": "paragraph",
-        "content": "If you need assistance with the theme or have any bugs to report, please email us at [shopify@luciddesign.co.nz](mailto:shopify@luciddesign.co.nz) visit our support site: [https://luciddesign.uservoice.com/](https://luciddesign.uservoice.com/)"
+        "content": "If you need assistance with the theme or have any bugs to report, please email us at [shopify@luciddesign.co.nz](mailto:shopify@luciddesign.co.nz) visit our support site: [https:\/\/luciddesign.uservoice.com\/](https:\/\/luciddesign.uservoice.com\/)"
       }
     ]
   },
