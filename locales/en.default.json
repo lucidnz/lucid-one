@@ -182,6 +182,17 @@
     "tags": {
       "all": "All",
       "browse_by": "Browse by tag:"
+    },
+    "sort": {
+      "sort_by": "Sort by:",
+      "manual": "Featured",
+      "price-ascending": "Price: Low to High",
+      "price-descending": "Price: High to Low",
+      "title-ascending": "A-Z",
+      "title-descending": "Z-A",
+      "created-ascending": "Oldest to Newest",
+      "created-descending": "Newest to Oldest",
+      "best-selling": "Best Selling"
     }
   },
   "product": {

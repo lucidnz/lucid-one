@@ -1786,6 +1786,12 @@
         "default": "inline"
       },
       {
+        "label": "Show sort by menu",
+        "id": "show_collection_sort_by",
+        "type": "checkbox",
+        "default": true
+      },
+      {
         "type": "select",
         "id": "pagination_limit",
         "label": "Pagination limit",

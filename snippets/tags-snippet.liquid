@@ -1,6 +1,7 @@
+<div class="collection-controls">
 {% if settings.display_tags == 'inline' %}
 	<ul class="nav nav-pills hidden-phone hidden-tablet">
-		{% if collection.all_tags.size > 0 %}
+		{% if collection.tags.size > 0 %}
 			<li{% unless current_tags %} class="active"{% endunless %}>
 			{% if collection.handle %}
 			{% comment %}Good for /collections/all collection and regular collections{% endcomment %}
@@ -14,7 +15,7 @@
 			{% endif %}
 			</li> 
 		{% endif %}
-		{% for tag in collection.all_tags %}
+		{% for tag in collection.tags %}
 			{% if current_tags contains tag %}
 			<li class="active">
 				{{ tag | link_to_remove_tag: tag }}
@@ -27,10 +28,10 @@
 		{% endfor %}  
 	</ul>
 	<div class="clearfix filter hidden-desktop">
-		<h4 class="pull-left">{{ 'collection.tags.browse_by' | t }}</h4>
-		<select class="coll-filter top-m">
+		<label for="filter-by">{{ 'collection.tags.browse_by' | t }}</label>
+		<select class="coll-filter" id="filter-by">
 			<option value="">{{ 'collection.tags.all' | t }}</option>
-			{% for tag in collection.all_tags %}
+			{% for tag in collection.tags %}
 			{% if current_tags contains tag %}
 			<option value="{{ tag | handle }}" selected>{{ tag }}</option>
 			{% else %}
@@ -41,10 +42,10 @@
 	</div>
 {% elsif settings.display_tags == 'dropdown' %}
 	<div class="clearfix filter">
-		<p>{{ 'collection.tags.browse_by' | t }}</p>
-		<select class="coll-filter">
+		<label for="filter-by">{{ 'collection.tags.browse_by' | t }}</label>
+		<select class="coll-filter" id="filter-by">
 			<option value="">{{ 'collection.tags.all' | t }}</option>
-			{% for tag in collection.all_tags %}
+			{% for tag in collection.tags %}
 			{% if current_tags contains tag %}
 			<option value="{{ tag | handle }}" selected>{{ tag }}</option>
 			{% else %}
@@ -54,3 +55,37 @@
 		</select>
 	</div>
 {% endif %}
+
+{% if settings.show_collection_sort_by %}
+<div class="sort-by-wrapper">
+  <label for="sort-by">{{ 'collection.sort.sort_by' | t }}</label> 
+  <select id="sort-by">
+    <option value="manual">{{ 'collection.sort.manual' | t }}</option>
+    <option value="price-ascending">{{ 'collection.sort.price-ascending' | t }}</option>
+    <option value="price-descending">{{ 'collection.sort.price-descending' | t }}</option>
+    <option value="title-ascending">{{ 'collection.sort.title-ascending' | t }}</option>
+    <option value="title-descending">{{ 'collection.sort.title-descending' | t }}</option>
+    <option value="created-ascending">{{ 'collection.sort.created-ascending' | t }}</option>
+    <option value="created-descending">{{ 'collection.sort.created-descending' | t }}</option>
+    <option value="best-selling">{{ 'collection.sort.best-selling' | t }}</option>
+  </select>
+</div>
+<script>
+Shopify.queryParams = {};
+if (location.search.length) {
+  for (var aKeyValue, i = 0, aCouples = location.search.substr(1).split('&'); i < aCouples.length; i++) {
+    aKeyValue = aCouples[i].split('=');
+    if (aKeyValue.length > 1) {
+      Shopify.queryParams[decodeURIComponent(aKeyValue[0])] = decodeURIComponent(aKeyValue[1]);
+    }
+  }
+}
+jQuery('#sort-by')
+  .val('{{ collection.sort_by | default: collection.default_sort_by | escape }}')
+  .bind('change', function() {
+    Shopify.queryParams.sort_by = jQuery(this).val();
+    location.search = jQuery.param(Shopify.queryParams).replace(/\+/g, '%20');
+  });
+</script>
+{% endif %}
+</div>
