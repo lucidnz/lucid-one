@@ -60,7 +60,7 @@
 							
 							<!-- SEARCH FIELD-->
 							{%  if settings.show_navbar_search %}
-							<form class="navbar-search pull-right" action="/search" method="get">
+							<form class="navbar-search navbar-form pull-right" action="/search" method="get">
 								{% assign col = settings.typeahead_collection %}
 								<input id="search-input" name="q" type="text" class="search-query" placeholder="{{ 'general.search.search_button' | t }}" data-provide="typeahead" data-source="[{% for product in collections[settings.typeahead_collection].products %}&quot;{{ product.title | remove: '"' | escape }}&quot;{% unless forloop.last %},{% endunless %}{% endfor %}]" autocomplete="off">  
                           	</form>
@@ -79,7 +79,7 @@
 
 								<!-- CART COUNT -->
 								{% if cart.item_count > 0 %}
-								<li><a href="/cart"><span class="icon-shopping-cart cart"></span>&nbsp;<span class="badge badge-info">{{ cart.item_count }}</span></a></li>
+								<li><a href="/cart"><span class="fa fa-shopping-cart cart"></span>&nbsp;<span class="badge badge-info">{{ cart.item_count }}</span></a></li>
 								{% endif %}
 
 								<!-- CUSTOMER ACCOUNT LINKS-->
