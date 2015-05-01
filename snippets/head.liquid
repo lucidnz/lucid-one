@@ -28,6 +28,8 @@
 
 <!-- Stylesheets -->
 <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+{{ '_bootstrap.css' | asset_url | stylesheet_tag }}
+{{ '_bootstrap-responsive.css' | asset_url | stylesheet_tag }}
 {{ '_base.scss.css' | asset_url | stylesheet_tag }}
 {{ 'theme-settings.css' | asset_url | stylesheet_tag }}
 <!--[if IE]>{{ 'ie.css' | asset_url | stylesheet_tag }}<![endif]-->

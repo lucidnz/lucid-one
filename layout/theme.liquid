@@ -252,18 +252,7 @@
 
 
 <!-- BOOTSTRAP JS -->
-{% if settings.include-transition %}{{ 'bootstrap-transition.js' | asset_url | script_tag }}{% endif %}
-{% if settings.include-alert %}{{ 'bootstrap-alert.js' | asset_url | script_tag }}{% endif %}
-{% if settings.include-modal %}{{ 'bootstrap-modal.js' | asset_url | script_tag }}{% endif %}
-{% if settings.include-dropdown %}{{ 'bootstrap-dropdown.js' | asset_url | script_tag }}{% endif %}
-{% if settings.include-scrollspy %}{{ 'bootstrap-scrollspy.js' | asset_url | script_tag }}{% endif %}
-{% if settings.include-tab %}{{ 'bootstrap-tab.js' | asset_url | script_tag }}{% endif %}
-{% if settings.include-tooltip %}{{ 'bootstrap-tooltip.js' | asset_url | script_tag }}{% endif %}
-{% if settings.include-popover %}{{ 'bootstrap-popover.js' | asset_url | script_tag }}{% endif %}
-{% if settings.include-button %}{{ 'bootstrap-button.js' | asset_url | script_tag }}{% endif %}
-{% if settings.include-collapse %}{{ 'bootstrap-collapse.js' | asset_url | script_tag }}{% endif %}
-{% if settings.include-carousel %}{{ 'bootstrap-carousel.js' | asset_url | script_tag }}{% endif %}
-{% if settings.include-typeahead %}{{ 'bootstrap-typeahead.js' | asset_url | script_tag }}{% endif %}
+{{ 'bootstrap.min.js' | asset_url | script_tag }}
 
 <!-- SHOP JS -->
 {% if settings.show_tweets %}{{ 'jquery.tweet.js' | asset_url | script_tag }}{% endif %}
