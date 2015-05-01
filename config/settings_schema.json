@@ -27,7 +27,11 @@
         "options": [
           {
             "value": "header",
-            "label": "Header Below Header (above content) - Good for logo images which are too big for header"
+            "label": "Header"
+          },
+          {
+            "value": "below_header",
+            "label": "Below Header (above content) - Good for logo images which are too big for header"
           },
           {
             "value": "sidebar",
@@ -49,20 +53,20 @@
       {
         "type": "image",
         "id": "logo.png",
-        "label": "Header Logo (png) Maximum Height: 40px",
-        "max-height": 40
+        "label": "Header Logo (png) Maximum Height: 80px",
+        "max-height": 80
       },
       {
         "type": "image",
         "id": "sidebar_logo.png",
-        "label": "Sidebar Logo (png) Maximum Width: 240px",
-        "max-width": 240
+        "label": "Sidebar Logo (png) Maximum Width: 480px",
+        "max-width": 480
       },
       {
         "type": "image",
         "id": "below_header_logo.png",
-        "label": "Below Header Logo (png) *Also used to supplement 'header' positioned logo on tablets and mobile phones Maximum Width: 320px",
-        "max-width": 320
+        "label": "Below Header Logo (png) *Also used to supplement 'header' positioned logo on tablets and mobile phones Maximum Width: 640px",
+        "max-width": 640
       },
       {
         "type": "color",

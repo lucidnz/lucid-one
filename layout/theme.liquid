@@ -23,7 +23,7 @@
 							{% if settings.logo_position == 'header' %}
 							{% if settings.use_logo_image %}
 							<a class="logo logo-header-image fl hidden-tablet hidden-phone" href="/" title="{{ 'general.logo.link_title' | t: shop_name: shop_name }}">
-								<img src="{{ 'logo.png' | asset_url }}" alt="{{ shop.name }} Logo">
+								<img src="{{ 'logo.png' | asset_url }}" alt="{{ shop.name }} Logo" height="40" style="height: 40px;">
 							</a>
 							{% else %}
 							<a href="/" class="logo logo-header fl hidden-tablet hidden-phone" title="{{ 'general.logo.link_title' | t: shop_name: shop_name }}">{{ shop.name }}</a>
@@ -115,7 +115,7 @@
                 {% capture logo_image %}{% if logo_pos == 'header' %}below_header_logo.png{% else %}{{ logo_pos | append: '_logo.png' }}{% endif %}{% endcapture %}
 				{% if settings.use_logo_image and settings.below_header_logo != '' %}
 				<a href="/" title="{{ 'general.logo.link_title' | t: shop_name: shop_name }}" class="logo{% if settings.logo_position == 'below_header' %} below_header{% else %} visible-phone{% if settings.logo_position != 'sidebar' %} visible-tablet{% endif %}{% endif %} btm-m bl">
-					<img src="{{ logo_image | asset_url }}" alt="{{ shop_name }} Logo">
+					<img src="{{ logo_image | asset_url }}" alt="{{ shop_name }} Logo" width="320">
 				</a>
 				{% else %}
 				<a href="/" title="{{ 'general.logo.link_title' | t: shop_name: shop_name }}" class="logo logo-body{% if settings.logo_position == 'below_header' %} below_header{% else %} visible-phone{% if settings.logo_position != 'sidebar' %} visible-tablet{% endif %}{% endif %} btm-m bl">{{ shop.name }}</a>
