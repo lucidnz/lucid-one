@@ -51,3 +51,66 @@ $('#currencies-picker select').change(function() {
 	$('.selected-currency a').fadeIn();
 	return true;
 });
+
+
+/* Navbar height fix */
+if (!window.getComputedStyle) {
+  window.getComputedStyle = function(el, pseudo) {
+    this.el = el;
+    this.getPropertyValue = function(prop) {
+      var re = /(\-([a-z]){1})/g;
+      if (prop == 'float') prop = 'styleFloat';
+      if (re.test(prop)) {
+        prop = prop.replace(re, function () {
+          return arguments[2].toUpperCase();
+        });
+      }
+      return el.currentStyle[prop] ? el.currentStyle[prop] : null;
+    };
+    return this;
+  };
+}
+
+var css_mq = function () {
+  return window.getComputedStyle(document.body,':after').getPropertyValue('content');
+};
+
+$(function () {
+  var body = $('body'),
+    navbar = $('.navbar-fixed-top');
+    
+  var set_body_padding = function (new_padding) {
+    if (body.css('padding-top') !== new_padding) {
+      body.css('padding-top', new_padding);
+    }
+  };
+    
+  var adjust_body_padding = function () {
+    var mq_size = css_mq();
+    if (mq_size === 'lg' || mq_size === 'xl') {
+      var new_padding = (navbar.height() + 20) + 'px';
+      set_body_padding(new_padding);
+    } else {
+      set_body_padding('0px');
+    }
+  };
+  
+  if (navbar.length > 0) {
+  
+    adjust_body_padding(); // navbar fix on page load here
+  
+    // buffer resize event
+    var timeout;
+    $(window).resize(function() {
+      if (timeout) {
+        clearTimeout(timeout);
+      }
+      timeout = setTimeout(function() {
+        
+        adjust_body_padding(); // actual navbar fix here
+        
+      }, 100);
+    });
+    
+  }
+});
