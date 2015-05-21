@@ -72,7 +72,7 @@ if (!window.getComputedStyle) {
 }
 
 var css_mq = function () {
-  return window.getComputedStyle(document.body,':after').getPropertyValue('content').replace(/'/g, "");
+  return window.getComputedStyle(document.body,':after').getPropertyValue('content').replace(/['"]/g, "");
 };
 
 $(function () {
@@ -87,6 +87,7 @@ $(function () {
     
   var adjust_body_padding = function () {
     var mq_size = css_mq();
+    console.log('mq_size', mq_size);
     if (mq_size === 'lg' || mq_size === 'xl') {
       var new_padding = (navbar.height() + 20) + 'px';
       set_body_padding(new_padding);
