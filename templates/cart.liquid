@@ -46,7 +46,7 @@ function remove_item(id) {
 		        <button type="submit" class="btn-large btn" name="update">{{ 'cart.summary.update' | t }}</button>
 		        <button class="btn-large btn btn-primary" name="checkout" type="submit">{{ 'cart.summary.checkout' | t }}</button>
 	        </div>
-          	<p><a href="{{ cart.items.first.product.collections.first.url }}" title="{{ 'cart.summary.view_all_products' | t }}">{{ 'cart.summary.continue_shopping_html' | t }}</a></p>
+          	<p><a href="{{ cart.items.first.product.collections.first.url }}" title="{{ 'cart.summary.view_all_products' | t | escape }}">{{ 'cart.summary.continue_shopping_html' | t }}</a></p>
             {% if settings.display_extra_checkout_buttons %}
 			{% if additional_checkout_buttons %}
 			<div class="additional-checkout-buttons">

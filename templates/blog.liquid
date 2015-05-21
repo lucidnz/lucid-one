@@ -1,7 +1,7 @@
 <div class="{% if settings.show_sidebar %}span9{% else %}span12{% endif %}" id="main-content">
     
 	<!-- BLOG TITLE -->
-	<h1 class="title">{% unless current_tags %}{{ blog.title }}{% else %}{{ blog.title | link_to: blog.url }} &rsaquo; {% for tag in current_tags %}{{ tag }}{% unless forloop.last %}, {% endunless %}{% endfor %}{% endunless %}<a href="{{ blog.url }}.atom" title="View {{ blog.title }} RSS Feed" class="icon-rss rss pull-right"></a></h1>
+	<h1 class="title">{% unless current_tags %}{{ blog.title }}{% else %}{{ blog.title | link_to: blog.url }} &rsaquo; {% for tag in current_tags %}{{ tag }}{% unless forloop.last %}, {% endunless %}{% endfor %}{% endunless %}<a href="{{ blog.url }}.atom" title="View {{ blog.title | escape }} RSS Feed" class="icon-rss rss pull-right"></a></h1>
     
 	<hr>
 	{% paginate blog.articles by 10 %}
@@ -11,7 +11,7 @@
 	<article>
 		<header>
 		<h3 class="blog">
-			<a href="{{article.url}}" title="{{ article.title }}">{{ article.title }}</a>
+			<a href="{{article.url}}" title="{{ article.title | escape }}">{{ article.title }}</a>
 		</h3>
 		<p>
 			<!-- ARTICLE TAGS -->
@@ -21,7 +21,7 @@
 			<small>{{ 'blog.article.published_at' | t: publish_date: article_published_at_date, author: article_author }}
 			{% if blog.comments_enabled? %}
 			{% if article.comments.size > 0 %}
-				&ensp;| &ensp;<a href="{{article.url}}#comments" title="{{ 'blog.article.view_comments' | t: article_title: article_title }}">{{ article.comments.size }} {{ article.comments.size | pluralize: 'comment', 'comments'}}</a>
+				&ensp;| &ensp;<a href="{{article.url}}#comments" title="{{ 'blog.article.view_comments' | t: article_title: article_title | escape }}">{{ article.comments.size }} {{ article.comments.size | pluralize: 'comment', 'comments'}}</a>
 			{% endif %}
 			{% endif %}  
 			<br>
@@ -29,7 +29,7 @@
 				<i class="icon-tag"></i>
                 <span class="blog-tags">
 				{% for tag in article.tags %}
-				<a href="{{ shop.url}}/blogs/{{ blog.handle }}/tagged/{{ tag | handleize }}" title="{{ 'blog.article.tagged_with' | t: tag: tag }}"{% if current_tags contains tag %} class="active"{% endif %}>{{ tag }}</a>
+				<a href="{{ shop.url}}/blogs/{{ blog.handle }}/tagged/{{ tag | handleize }}" title="{{ 'blog.article.tagged_with' | t: tag: tag | escape }}"{% if current_tags contains tag %} class="active"{% endif %}>{{ tag }}</a>
 				{% unless forloop.last %}, {% endunless %}
 				{% endfor %}
                 </span>
@@ -42,7 +42,7 @@
 		{% if article.excerpt.size > 0 %}
 			{{ article.excerpt }}
 		{% else %}
-			<p>{{ article.content | strip_html | truncatewords: 50 }} [<a href="{{ article.url }}" title="{{ article.title }}">{{ 'blog.article.details' | t }}</a>]</p>
+			<p>{{ article.content | strip_html | truncatewords: 50 }} [<a href="{{ article.url }}" title="{{ article.title | escape }}">{{ 'blog.article.details' | t }}</a>]</p>
 		{% endif %}
 		</section> 
 	</article>

@@ -10,7 +10,7 @@
           <li class="span4">
               <div class="thumbnail">
                   {% assign collection_title = collection.title %}
-                  <a href="{{ collection.url }}" title="{{ 'collection.collection_loop.view_collection' | t: collection_title: collection_title }}">
+                  <a href="{{ collection.url }}" title="{{ 'collection.collection_loop.view_collection' | t: collection_title: collection_title | escape }}">
                       {% if collection.image %}
                       {{ collection.image.src | collection_img_url: 'large' | img_tag: collection_title }}
                       {% else %}
@@ -18,7 +18,7 @@
                       {% endif %}
                   </a>
                   <div class="caption">
-                      <h4><a href="{{ collection.url }}" title="{{ 'collection.collection_loop.view_collection' | t: collection_title: collection_title }}">{{ collection_title }}</a></h4>
+                      <h4><a href="{{ collection.url }}" title="{{ 'collection.collection_loop.view_collection' | t: collection_title: collection_title | escape }}">{{ collection_title }}</a></h4>
                   </div>
               </div>
           </li>

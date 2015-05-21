@@ -22,11 +22,11 @@
                           	{% assign shop_name = shop.name %}
 							{% if settings.logo_position == 'header' %}
 							{% if settings.use_logo_image %}
-							<a class="logo logo-header-image fl hidden-tablet hidden-phone" href="/" title="{{ 'general.logo.link_title' | t: shop_name: shop_name }}">
+							<a class="logo logo-header-image fl hidden-tablet hidden-phone" href="/" title="{{ 'general.logo.link_title' | t: shop_name: shop_name | escape }}">
 								<img src="{{ 'logo.png' | asset_url }}" alt="{{ shop.name }} Logo" height="40" style="height: 40px;">
 							</a>
 							{% else %}
-							<a href="/" class="logo logo-header fl hidden-tablet hidden-phone" title="{{ 'general.logo.link_title' | t: shop_name: shop_name }}">{{ shop.name }}</a>
+							<a href="/" class="logo logo-header fl hidden-tablet hidden-phone" title="{{ 'general.logo.link_title' | t: shop_name: shop_name | escape }}">{{ shop.name }}</a>
 							{% endif %}
 							{% endif %}
 							<!-- MAIN NAVIGATION -->
@@ -37,7 +37,7 @@
 								{% if linklists[child_list_handle] and linklists[child_list_handle].links.size > 0 %}
 
 								<li class="dropdown{% if link.active %} active{% endif %}" id="menu{{ forloop.index }}" >
-									<a class="dropdown-toggle" data-toggle="dropdown" href="#menu{{ forloop.index }}" title="View {{ link.title }}">
+									<a class="dropdown-toggle" data-toggle="dropdown" href="#menu{{ forloop.index }}" title="View {{ link.title | escape }}">
 										{{ link.title }}
 										<b class="caret"></b>
 									</a>
@@ -45,14 +45,14 @@
 									{% if linklists[child_list_handle] and linklists[child_list_handle].links.size > 0 %}
 									<ul class="dropdown-menu">
 										{% for l in linklists[child_list_handle].links %}
-										<li{% if link.handle == page.handle %} class="active"{% endif %}><a href="{{ l.url }}" title="View {{ l.title }}">{{ l.title }}</a></li>
+										<li{% if link.handle == page.handle %} class="active"{% endif %}><a href="{{ l.url }}" title="View {{ l.title | escape }}">{{ l.title }}</a></li>
 										{% endfor %}
 									</ul>
 									{% endif %}
 								</li>
 								{% else %}
 								<li {% if link.active %}class="active"{% endif %}>
-									<a href="{{ link.url }}" title="View {{ link.title }}">{{ link.title }}</a>        
+									<a href="{{ link.url }}" title="View {{ link.title | escape }}">{{ link.title }}</a>        
 								</li>    
 								{% endif %}
 								{% endfor %}
@@ -114,11 +114,11 @@
                 {% assign logo_pos = settings.logo_position %}
                 {% capture logo_image %}{% if logo_pos == 'header' %}below_header_logo.png{% else %}{{ logo_pos | append: '_logo.png' }}{% endif %}{% endcapture %}
 				{% if settings.use_logo_image and settings.below_header_logo != '' %}
-				<a href="/" title="{{ 'general.logo.link_title' | t: shop_name: shop_name }}" class="logo{% if settings.logo_position == 'below_header' %} below_header{% else %} visible-phone{% if settings.logo_position != 'sidebar' %} visible-tablet{% endif %}{% endif %} btm-m bl">
+				<a href="/" title="{{ 'general.logo.link_title' | t: shop_name: shop_name | escape }}" class="logo{% if settings.logo_position == 'below_header' %} below_header{% else %} visible-phone{% if settings.logo_position != 'sidebar' %} visible-tablet{% endif %}{% endif %} btm-m bl">
 					<img src="{{ logo_image | asset_url }}" alt="{{ shop_name }} Logo" width="320">
 				</a>
 				{% else %}
-				<a href="/" title="{{ 'general.logo.link_title' | t: shop_name: shop_name }}" class="logo logo-body{% if settings.logo_position == 'below_header' %} below_header{% else %} visible-phone{% if settings.logo_position != 'sidebar' %} visible-tablet{% endif %}{% endif %} btm-m bl">{{ shop.name }}</a>
+				<a href="/" title="{{ 'general.logo.link_title' | t: shop_name: shop_name | escape }}" class="logo logo-body{% if settings.logo_position == 'below_header' %} below_header{% else %} visible-phone{% if settings.logo_position != 'sidebar' %} visible-tablet{% endif %}{% endif %} btm-m bl">{{ shop.name }}</a>
                 {% if settings.use_logo_image and logo_pos == 'header' %}
                 <span class="visible-phone visible-tablet alert">{{ 'home_page.blank_slate.logo_supplement_alert' | t }}</span>
                 {% endif %}
@@ -176,12 +176,12 @@
           <h3>{% if settings.sm_title == blank %}{{ 'home_page.blank_slate.social_media_title' | t }}{% else %}{{ settings.sm_title }}{% endif %}</h3>
 					<p class="social-icons">
                       	{% assign shop_name = shop.name %}
-						{% if settings.facebook-icon != '' %}<a href="{{ settings.facebook-icon }}" title="{{ 'general.social.view_facebook' | t: shop_name: shop_name }}" target="_blank" class="fa fa-facebook-square facebook"></a>{% endif %}
-						{% if settings.twitter-icon != '' %}<a href="//twitter.com/{{ settings.twitter-icon }}" title="{{ 'general.social.view_twitter' | t: shop_name: shop_name }}" target="_blank" class="fa fa-twitter-square twitter"></a>{% endif %}
-						{% if settings.googleplus-icon != '' %}<a href="{{ settings.googleplus-icon }}" title="{{ 'general.social.view_googleplus' | t: shop_name: shop_name }}" target="_blank" class="fa fa-google-plus-square googleplus"></a>{% endif %}
-						{% if settings.pinterest-icon != '' %}<a href="{{ settings.pinterest-icon }}" title="{{ 'general.social.view_pinterest' | t: shop_name: shop_name }}" target="_blank" class="pinterest fa fa-pinterest-square"></a>{% endif %}
-                      	{% if settings.instagram-icon != '' %}<a href="{{ settings.instagram-icon }}" title="{{ 'general.social.view_instagram' | t: shop_name: shop_name }}" target="_blank" class="instagram fa fa-instagram"></a>{% endif %}
-						{% if settings.rss-icon != '' %}<a href="{{ settings.rss-icon }}.atom" title="{{ 'general.social.view_rss' | t: shop_name: shop_name }}" target="_blank" class="fa fa-rss-square rss"></a>{% endif %}
+						{% if settings.facebook-icon != '' %}<a href="{{ settings.facebook-icon }}" title="{{ 'general.social.view_facebook' | t: shop_name: shop_name | escape }}" target="_blank" class="fa fa-facebook-square facebook"></a>{% endif %}
+						{% if settings.twitter-icon != '' %}<a href="//twitter.com/{{ settings.twitter-icon }}" title="{{ 'general.social.view_twitter' | t: shop_name: shop_name | escape }}" target="_blank" class="fa fa-twitter-square twitter"></a>{% endif %}
+						{% if settings.googleplus-icon != '' %}<a href="{{ settings.googleplus-icon }}" title="{{ 'general.social.view_googleplus' | t: shop_name: shop_name | escape }}" target="_blank" class="fa fa-google-plus-square googleplus"></a>{% endif %}
+						{% if settings.pinterest-icon != '' %}<a href="{{ settings.pinterest-icon }}" title="{{ 'general.social.view_pinterest' | t: shop_name: shop_name | escape }}" target="_blank" class="pinterest fa fa-pinterest-square"></a>{% endif %}
+                      	{% if settings.instagram-icon != '' %}<a href="{{ settings.instagram-icon }}" title="{{ 'general.social.view_instagram' | t: shop_name: shop_name | escape }}" target="_blank" class="instagram fa fa-instagram"></a>{% endif %}
+						{% if settings.rss-icon != '' %}<a href="{{ settings.rss-icon }}.atom" title="{{ 'general.social.view_rss' | t: shop_name: shop_name | escape }}" target="_blank" class="fa fa-rss-square rss"></a>{% endif %}
 					</p>
 				</div>
 				<!-- FOOTER LINKS -->

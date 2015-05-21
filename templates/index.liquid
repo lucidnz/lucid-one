@@ -60,7 +60,7 @@
     				</a>
     				{% if settings.show_collection_titles %}
     				<div class="caption">
-    					<h4><a href= "{{ link.url }}" title="View {{ link.title }}">{{ link.title }}</a></h4>
+    					<h4><a href= "{{ link.url }}" title="View {{ link.title | escape }}">{{ link.title }}</a></h4>
     				</div>
     				{% endif %}
     			</li>

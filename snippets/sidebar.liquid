@@ -4,11 +4,11 @@
   	{% assign shop_name = shop.name %}
 	{% if settings.logo_position == 'sidebar' %}
 	{% if settings.use_logo_image %}
-	<a class="bl logo l-m" href="/" title="{{ 'general.logo.link_title' | t: shop_name: shop_name }}">
+	<a class="bl logo l-m" href="/" title="{{ 'general.logo.link_title' | t: shop_name: shop_name | escape }}">
 		<img src="{{ 'sidebar_logo.png' | asset_url }}" alt="{{ shop.name }} Logo" width="240">
 	</a>
 	{% else %}
-	<a class="bl logo logo-body l-m" href="/" title="{{ 'general.logo.link_title' | t: shop_name: shop_name }}">{{ shop.name }}</a>
+	<a class="bl logo logo-body l-m" href="/" title="{{ 'general.logo.link_title' | t: shop_name: shop_name | escape }}">{{ shop.name }}</a>
 	{% endif %}
 	<hr>
 	{% endif %}

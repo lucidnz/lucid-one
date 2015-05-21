@@ -9,7 +9,7 @@
     
     				<li class="span{% if col_settings == '4' %}3{% elsif col_settings == '3' %}4{% endif %}">
     					<div class="thumbnail">
-    						<a class="bl center rel" href= "{{ product.url | within: col_group }}" title="{{ product.title }}">
+    						<a class="bl center rel" href= "{{ product.url | within: col_group }}" title="{{ product.title | escape }}">
     							<img src="{{ product.featured_image | product_img_url: 'large' }}" alt="{{ product.featured_image.alt }}">
                                 {% if product.available %}
         							{% if product.compare_at_price_max > product.price %}
@@ -20,7 +20,7 @@
                                 {% endif %}
     						</a>
     						<div class="caption">
-    							<h4><a href= "{{ product.url | within: col_group }}" title="{{ product.title }}">{{ product.title }}</a></h4>
+    							<h4><a href= "{{ product.url | within: col_group }}" title="{{ product.title | escape }}">{{ product.title }}</a></h4>
     							<p>
                                     {% if product.price_varies %}{{ 'product.product_loop.price_varies' | t }}{% endif %}{{ product.price_min | money_with_currency }}
     							</p>
