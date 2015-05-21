@@ -72,7 +72,7 @@ if (!window.getComputedStyle) {
 }
 
 var css_mq = function () {
-  return window.getComputedStyle(document.body,':after').getPropertyValue('content');
+  return window.getComputedStyle(document.body,':after').getPropertyValue('content').replace(/'/g, "");
 };
 
 $(function () {
@@ -96,7 +96,6 @@ $(function () {
   };
   
   if (navbar.length > 0) {
-  
     adjust_body_padding(); // navbar fix on page load here
   
     // buffer resize event
