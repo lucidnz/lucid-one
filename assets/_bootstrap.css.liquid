@@ -3010,7 +3010,8 @@ table th[class*="span"],
 }
 
 .dropdown-backdrop {
-  position: fixed;
+/*   position: fixed; */
+  position: static; /* fix for dropdown sublinks issue on mobiles: https://github.com/twbs/bootstrap/issues/7968 */
   top: 0;
   right: 0;
   bottom: 0;
