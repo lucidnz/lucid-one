@@ -4,7 +4,7 @@
     {% include 'head' %}
 	{{ content_for_header }}
 </head>
-<body>
+<body{% if settings.fixed_header %} class="header-is-fixed"{% endif %}>
 	<div id="container-wrap">
 		<div id="main" class="tab-side-pad{% if settings.fixed_header %} fixed-nav{% else %} static-nav{% endif %}"> <!-- main content wrap for sticky footer-->
 			<!-- NAV BAR -->
