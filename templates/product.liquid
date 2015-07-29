@@ -85,27 +85,38 @@
 		
 		<!-- PRODUCT IMAGES (TABLET & DESKTOP) -->
 		<div class="span6{% unless settings.show_breadcrumb %} top-m{% endunless %} hidden-phone">
-  		<div class="featured-image">
-				{% assign featured_image = product.selected_or_first_available_variant.featured_image | default: product.featured_image %}
-				<a class="thumbnail featured-image fancybox" data-image-id="{{ featured_image.id }}" href="{{ featured_image | img_url: '1024x1024' }}" rel="gallery" title="{{ featured_image.alt | escape }}">
-					<img src="{{ featured_image | img_url: 'large' }}" alt="{% if featured_image.alt %}{{ featured_image.alt | escape }}{% else %}{{ product.title | escape }}{% endif %}" />
-				</a>
-  		</div>
+  		{% assign featured_image = product.selected_or_first_available_variant.featured_image | default: product.featured_image %}
+  		<a class="featured-image fancybox" data-image-id="{{ featured_image.id }}" href="{{ featured_image | img_url: '1024x1024' }}" rel="gallery" title="{{ featured_image.alt | escape }}">
+  			<img src="{{ featured_image | img_url: 'large' }}" alt="{% if featured_image.alt %}{{ featured_image.alt | escape }}{% else %}{{ product.title | escape }}{% endif %}" />
+  		</a>
 			{% if product.images.size > 1 %}
   		<ul class="thumbnails">
 				{% for image in product.images %}
 				<li class="span3{% cycle 'product-thumbs': ' no-left-margin', '', '', '' %}">
-					<a href="#" class="thumbnail" id="{{ image.id }}" title="{{ image.alt | escape }}">
+					<a href="{{ image | product_img_url: 'master' }}" class="thumbnail" id="{{ image.id }}" title="{{ image.alt | escape }}">
 						<img src="{{ image | product_img_url: 'small' }}" alt="{% if product.image.alt %}{{ product.image.alt | escape }}{% else %}{{ product.title | escape }}{% endif %}" />
 					</a>
-					{% if image != featured_image %}
-					<a class="fancybox hidden" href="{{ image | product_img_url: '1024x1024' }}" rel="gallery" title="{{ image.alt | escape }}"></a>
-					{% endif %}
+					<a class="{% if image != featured_image %}fancybox {% endif %}hidden" href="{{ image | product_img_url: '1024x1024' }}" rel="gallery" title="{{ image.alt | escape }}"></a>
 				</li>
 				{% endfor %}
   		</ul>
 			{% endif %}
 		</div>
+		<script>
+  		$('.thumbnail').on('click', function (e) {
+    		e.preventDefault();
+    		var newImage = { src: e.currentTarget.href, fbox_link: $(e.currentTarget).next('a') };
+    		var element = document.querySelector('.featured-image img');
+	  		Shopify.Image.switchImage(newImage, element, function (newImageSizedSrc, newImage, element) {
+          $(element).attr('src', newImageSizedSrc);
+          $(element).parents('a').attr('href', newImage.fbox_link.attr('href'));
+          // update fancybox gallery links
+  	  		$('.thumbnails a.hidden').addClass('fancybox');
+  	  		newImage.fbox_link.removeClass('fancybox');
+        });
+  		});
+		</script>
+		
 </div>
 <div class="row-fluid">
 	<!-- RELATED PRODUCTS -->
